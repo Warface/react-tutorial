@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "./nav.css";
+import Search from "../Search/Search";
 
 function Nav() {
   return (
@@ -12,6 +14,7 @@ function Nav() {
           <Link to="/counter">Counter</Link>
         </li>
       </ul>
+      <Search />
     </div>
   );
 }
