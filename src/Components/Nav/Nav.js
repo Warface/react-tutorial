@@ -11,8 +11,11 @@ function Nav() {
           <Link to="/">Home</Link>
         </li>
         <li>
-          <Link to="/counter">Counter</Link>
+          <Link to="/listusers">List users</Link>
         </li>
+        {/* <li>
+          <Link to="/counter">Counter</Link>
+        </li> */}
       </ul>
       <Search />
     </div>

@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import './counter.css';
 
 function Counter() {
 
@@ -15,11 +16,19 @@ function Counter() {
     localStorage.setItem("count", count + 1);
   }
 
+  const resetCounter = () => {
+    setCount(0)
+    localStorage.setItem("count", 0);
+  }
+
   return (
     <div>
       <p>You clicked {count} times</p>
-      <button onClick={updateCounter}>
-        Click me
+      <button className="btn--updateCounter" onClick={updateCounter}>
+        Add + 1
+      </button>
+      <button className="btn--resetCounter" onClick={resetCounter}>
+        Reset
       </button>
     </div>
   );

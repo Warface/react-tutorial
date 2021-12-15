@@ -1,11 +1,17 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./search.css";
 
 function Search() {
   const [searchValue, setSearchValue] = useState("");
+  const navigate = useNavigate();
 
   const submitSearch = () => {
-    console.log(searchValue);
+      navigate(`/search/${searchValue}`)
+      clearSearch();
+  };
+
+  const clearSearch = () => {
     document.getElementsByClassName("search-input")[0].value = "";
     setSearchValue("");
   };
@@ -15,6 +21,11 @@ function Search() {
       <input
         type="text"
         className="search-input"
+        onKeyPress={(e) => {
+          if (e.key === "Enter") {
+            submitSearch();
+          }
+        }}
         onChange={(e) => setSearchValue(e.target.value)}
       />
       <button className="search-submit" onClick={submitSearch}>
