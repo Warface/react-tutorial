@@ -1,28 +1,31 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Nav from "./Components/Nav/Nav";
+import Navz from "./Components/Nav/Navz";
 import Home from "./Sections/Home/Home";
-//import Counter from "./Sections/Counter/Counter";
+import Counter from "./Sections/Counter/Counter";
 import SearchResults from "./Sections/SearchResults/SearchResults";
+import { Container, Row, Col } from "react-bootstrap";
 import ListUsers from "./Sections/ListUsers/ListUsers";
-import "./style.css";
+import "./dist/output.css";
 
 function App() {
   return (
     <Router>
-      <main>
-        <Nav />
-        <div className="main-content">
-          <Routes>
-            <Route exact path="/" element={<Home />} />
-            {/* <Route path="/counter" element={<Counter />} /> */}
-            <Route path="/listusers" element={<ListUsers />} >
-              <Route path="/listusers/:limit" element={<ListUsers />} />
-            </Route>
-            <Route path="/search/:search" element={<SearchResults />} />
-          </Routes>
-        </div>
-      </main>
+        <Navz />
+        <Container className="my-5">
+          <Row>
+            <Col>
+              <Routes>
+                <Route exact path="/" element={<Home />} />
+                <Route path="/counter" element={<Counter />} />
+                <Route path="/listusers" element={<ListUsers />} >
+                  <Route path="/listusers/:limit" element={<ListUsers />} />
+                  <Route path="/listusers/search/:search" element={<ListUsers />} />
+                </Route>
+              </Routes>
+            </Col>
+          </Row>
+        </Container>
     </Router>
   );
 }

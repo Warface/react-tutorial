@@ -1,14 +1,26 @@
-import React from 'react'
-import './listUsers.css'
+import React, {useState, useEffect} from 'react'
 import { useParams, useNavigate } from 'react-router-dom';
-import userJson from './users.json'
+import userJson from './users.json'; // Get from a local file
 
 
 function ListUsers() {
 
-    const max = 10;
+    const max = userJson.info.results;
     const navigate = useNavigate();
-    let newLimit = max;
+    let [newLimit, setNewLimit] = useState(max);
+    let sectionTitle = "List users";
+
+    //If you want to get from an URL
+    //let [users, setUsers] = useState([]);
+
+    /* useEffect (() => {
+        fetch(`https://randomuser.me/api/?results=${newLimit}`)
+            .then((response) => response.json())
+            .then((res) => {
+                setUsers( res.results );
+            });
+    }, [newLimit]); */
+
 
     const maxUser = () => {
         let { limit } = useParams();
@@ -21,19 +33,49 @@ function ListUsers() {
         }
     }
 
-    const listUser = userJson.results.slice(0, maxUser()).map((user, index) => {
+    const card = (user, index) => {
         return (
-            <div className="user-card" key={index}>
-                <div className="thumbnail"><img src={user.picture.large} alt=""/></div>
-                <div className="name">{user.name.first} {user.name.last}</div>
-                <div className="age">{user.dob.age} yo.</div>
-                <div className="email"><a href={"mailto:" + user.email}>{user.email}</a></div>
+            <div className="flex-initial w-[23%] m-[1%] bg-gray-300 p-3" key={index}>
+                <div className="text-center text-[1.2rem] bg-gray-200 p-[1rem]">
+                    {user.name.first} {user.name.last}
+                </div>
+                <div className="my-3 p-0">
+                    <img className="w-100" src={user.picture.large} alt={user.name.first + ' ' + user.name.last} />
+                </div>
+               
+                <div className="age">Age: {user.dob.age}</div>
+                <a className="mt-5 bg-blue-500 p-2 relative d-block text-white" href={"mailto:" + user.email}>Email me</a>
+               
             </div>
         )
-    })
+    }
+
+    let listUser;
+
+    if(location.pathname.match( "/listusers/search/" )){
+        let { search } = useParams();
+
+        sectionTitle = `Search results for "${search}"`;
+
+        listUser = userJson.results.filter(user => {
+            return user.name.first.toLowerCase().includes(search.toLowerCase()) || user.name.last.toLowerCase().includes(search.toLowerCase());
+            
+        })
+        .map((user, index) => {
+            return card(user, index);
+        })
+        
+    }else{
+        listUser = userJson.results.slice(0, maxUser()).map((user, index) => {
+            return card(user, index);
+        })
+    }
+
+    
 
     const changeMax = (e) => {
         newLimit = e.target.value;
+        setNewLimit(newLimit);
         //Delay to avoid the page to reload
         setTimeout(() => {
             navigate(`/listusers/${newLimit}`);
@@ -41,13 +83,17 @@ function ListUsers() {
     }
 
     return (
-        <div>
-            <h1>List of users</h1>
-            Change the number of users to show: <input className="userMax" maxLength="999" max="999" defaultValue={newLimit} type="number" onChange={changeMax} />
-            <div className="list-users">
+        <div className="w-[100%] max-w-full m-auto">
+            
+            <h1>{sectionTitle}</h1>
+            
+            Change the number of users to show: <input className="form-control" maxLength={max} max={max} defaultValue={newLimit} type="number" onChange={changeMax} />
+            <div className="flex flex-wrap mt-5">
                 {listUser}
             </div>
+                
         </div>
+                    
     )
 }
 

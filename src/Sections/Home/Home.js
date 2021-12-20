@@ -1,10 +1,9 @@
 import React from "react";
-import "./home.css";
 
 function Home() {
   return (
-    <section className="home-header">
-      <h1>React testing ground</h1>
+    <section className="text-center">
+      <h1 className="">React testing ground - This page use Tailwind CSS</h1>
     </section>
   );
 }

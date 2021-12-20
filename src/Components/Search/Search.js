@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./search.css";
 
 function Search() {
   const [searchValue, setSearchValue] = useState("");
   const navigate = useNavigate();
 
   const submitSearch = () => {
-      navigate(`/search/${searchValue}`)
+      navigate(`/listusers/search/${searchValue}`)
       clearSearch();
   };
 
@@ -17,10 +16,11 @@ function Search() {
   };
 
   return (
-    <div className="search-form">
+    <div className="">
       <input
         type="text"
-        className="search-input"
+        className="p-1"
+        placeholder="Search a user"
         onKeyPress={(e) => {
           if (e.key === "Enter") {
             submitSearch();
@@ -28,7 +28,7 @@ function Search() {
         }}
         onChange={(e) => setSearchValue(e.target.value)}
       />
-      <button className="search-submit" onClick={submitSearch}>
+      <button type="submit" className="bg-cyan-600 p-1 text-white hover:bg-white hover:text-cyan-600" onClick={submitSearch}>
         Search
       </button>
     </div>

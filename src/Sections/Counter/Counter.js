@@ -1,15 +1,12 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import './counter.css';
 
 function Counter() {
 
   const savedCount = localStorage.getItem("count") ? localStorage.getItem("count") : 0;
   const [count, setCount] =  React.useState(parseFloat(savedCount));
-
-  useEffect(() => {
-    document.title = `You clicked ${count} times`;
-  });
 
   const updateCounter = () => {
     setCount(count + 1)
@@ -22,15 +19,20 @@ function Counter() {
   }
 
   return (
-    <div>
-      <p>You clicked {count} times</p>
-      <button className="btn--updateCounter" onClick={updateCounter}>
-        Add + 1
-      </button>
-      <button className="btn--resetCounter" onClick={resetCounter}>
-        Reset
-      </button>
-    </div>
+    <Container>
+      <Row>
+        <Col>
+          <h1>Counter</h1>
+          <p>You clicked {count} times</p>
+          <Button className="bg-cyan-600 p-1 text-white hover:bg-white hover:text-cyan-600 mr-5 my-4" onClick={updateCounter}>
+            Add + 1
+          </Button>
+          <Button className="bg-cyan-600 p-1 text-white hover:bg-white hover:text-cyan-600" onClick={resetCounter}>
+            Reset
+          </Button>
+        </Col>
+      </Row>
+    </Container>
   );
 
 }
